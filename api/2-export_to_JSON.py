@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Extend your Python script to export data in the JSON format."""
+import json
 import requests
 from sys import argv
 
@@ -14,16 +15,17 @@ if __name__ == "__main__":
         user_id)
     response = requests.get(url)
     todos = response.json()
+
+    tacks = []
+    for todo in todos:
+        task = {
+            "task": todo.get("title"),
+            "completed": todo.get("completed"),
+            "username": EMPLOYEE_NAME
+        }
+        tacks.append(task)
+
+    data = {user_id: tacks}
+
     with open("{}.json".format(user_id), "w") as json_file:
-        json_file.write("{ ")
-        json_file.write("\"{}\": [".format(user_id))
-        for task in todos:
-            json_file.write("{")
-            json_file.write("\"task\": \"{}\", ".format(task.get("title")))
-            json_file.write("\"completed\": \"{}\", ".format(
-                task.get("completed")))
-            json_file.write("\"username\": \"{}\"".format(EMPLOYEE_NAME))
-            json_file.write("}")
-            if task != todos[-1]:
-                json_file.write(", ")
-        json_file.write("]}")
+        json_file.write(json.dumps(data))
