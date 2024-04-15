@@ -8,13 +8,12 @@ if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
     response = requests.get(url)
     user = response.json()
-    EMPLOYEE_NAME = user.get("name")
+    EMPLOYEE_NAME = user.get("username")
 
     url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
         user_id)
     response = requests.get(url)
     todos = response.json()
-
     with open("{}.json".format(user_id), "w") as json_file:
         json_file.write("{")
         json_file.write("\"{}\": [".format(user_id))
@@ -27,5 +26,4 @@ if __name__ == "__main__":
             json_file.write("}")
             if task != todos[-1]:
                 json_file.write(", ")
-        json_file.write("]")
-        json_file.write("}")
+        json_file.write("]}")
