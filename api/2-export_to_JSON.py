@@ -15,7 +15,7 @@ if __name__ == "__main__":
     response = requests.get(url)
     todos = response.json()
     with open("{}.json".format(user_id), "w") as json_file:
-        json_file.write(" {")
+        json_file.write("{ ")
         json_file.write("\"{}\": [".format(user_id))
         for task in todos:
             json_file.write("{")
